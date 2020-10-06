@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 )
 
 var inicio, fin, nombrevideo, respuesta,parametros string
@@ -39,7 +40,7 @@ func conversion()  {
 		fmt.Println("Convirtiendo......")
 		args := []string{
 			"ffmpeg",
-			"-i",nombrevideo,
+			"-i",filepath.Base(nombrevideo),
 			"-ss",inicio,
 			"-to",fin,
 			"-vf","scale=720:-2",
@@ -48,7 +49,7 @@ func conversion()  {
 			"-crf","20",
 			"-ac","2",
 			"-c:a",
-			"copy","_prueba.mp4",
+			"copy",filepath.Dir(nombrevideo)+"/_"+filepath.Base(nombrevideo),
 		}
 		cmd := exec.Command(args[0],args[1:]...)
 		salida, error := cmd.CombinedOutput()
