@@ -40,7 +40,7 @@ func conversion()  {
 		fmt.Println("Convirtiendo......")
 		args := []string{
 			"ffmpeg",
-			"-i",filepath.Base(nombrevideo),
+			"-i",nombrevideo,
 			"-ss",inicio,
 			"-to",fin,
 			"-vf","scale=720:-2",
