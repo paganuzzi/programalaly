@@ -56,8 +56,26 @@ func conversion()  {
 
 		fmt.Println("Conversion Terminada")
 		fmt.Printf("%salida\n",salida)
-		
+		reproductor()
 	}
+	menu()
+}
+
+func reproductor(){
+	args := []string{
+		"vlc",
+		filepath.Dir(nombrevideo)+"/_"+filepath.Base(nombrevideo),
+	}
+	cmd := exec.Command(args[0],args[1:]...)
+	salida, error := cmd.CombinedOutput()
+
+	if error != nil{
+		log.Printf("Error %v",error)
+	}
+
+	fmt.Println("Conversion Terminada")
+	fmt.Printf("%salida\n",salida)
+
 	menu()
 }
 
