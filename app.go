@@ -1,12 +1,13 @@
 package main
 
 import (
-    //"flag"
+	"log"
 	"fmt"
 	"os"
+	"os/exec"
 )
 
-var inicio, fin, nombrevideo, respuesta,encoder string
+var inicio, fin, nombrevideo, respuesta,parametros string
 
 func init()  {
 	// flag.StringVar(&inicio, "inicio", "", "Tiempo de inicio hh:mm:ss")
@@ -17,6 +18,7 @@ func init()  {
 	adquieredatos()
 }
 
+
 func adquieredatos() {
 	
 	fmt.Print("Nombre del video xx.mp4: ")
@@ -26,17 +28,39 @@ func adquieredatos() {
 	fmt.Print("Tiempo de fin hh:mm:ss: ")
 	fmt.Scanln(&fin)
 	
-	conversion(nombrevideo,inicio,fin)
+	conversion()
 }
 
-func conversion(video,inicio,fin string)  {
-	fmt.Print("¿Confirma que queres editar el video "+nombrevideo+" desde el minuto "+inicio+" hasta "+fin+"? s/n ")
+func conversion()  {
+
+	fmt.Println("¿Confirma que queres editar el video "+nombrevideo+" desde el minuto "+inicio+" hasta "+fin+"? s/n ")
 	fmt.Scanln(&respuesta)
 	if respuesta == "s" {
-		encoder = "ffmpeg -i "+video+" -ss "+inicio+" -to "+fin+" -vf scale=480:-2 -c:v libx264 -preset veryslow -crf 20 -ac 2 -c:a copy _"+video
+		fmt.Println("Convirtiendo......")
+		args := []string{
+			"ffmpeg",
+			"-i",nombrevideo,
+			"-ss",inicio,
+			"-to",fin,
+			"-vf","scale=720:-2",
+			"-c:v","libx264",
+			"-preset","veryslow",
+			"-crf","20",
+			"-ac","2",
+			"-c:a",
+			"copy","_prueba.mp4",
+		}
+		cmd := exec.Command(args[0],args[1:]...)
+		salida, error := cmd.CombinedOutput()
+	
+		if error != nil{
+			log.Printf("Error %v",error)
+		}
+
+		fmt.Println("Conversion Terminada")
+		fmt.Printf("%salida\n",salida)
+		
 	}
-	//vlc "_${nombrevideo}"
-	fmt.Println(encoder)
 	menu()
 }
 
