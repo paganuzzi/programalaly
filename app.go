@@ -11,10 +11,6 @@ import (
 var inicio, fin, nombrevideo, respuesta,parametros string
 
 func init()  {
-	// flag.StringVar(&inicio, "inicio", "", "Tiempo de inicio hh:mm:ss")
-	// flag.StringVar(&fin, "fin", "", "Tiempo de corte hh:mm:ss")
-	// flag.StringVar(&nombrevideo, "nombre", "", "Nombre del video xx.mp4")
-	// flag.Parse()
 	fmt.Println("Hola!")
 	adquieredatos()
 }
